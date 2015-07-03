@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Ship : MonoBehaviour {
 
-	enum ColorState {
+	public enum ColorState {
 		Red, Blue
 	};
 

@@ -3,14 +3,32 @@ using System.Collections;
 
 public class Ship : MonoBehaviour {
 
+	enum ColorState {
+		Red, Blue
+	};
+
 	/// <summary>
 	/// 1 - The speed of the ship
 	/// </summary>
-	public Vector2 speed;
+	public Vector2 MovementSpeed;
+
+	[HideInInspector]
+	public ColorState colorState;
+
+	private Sprite shipSprite;
+	private SpriteRenderer shipSpriteRenderer;
 	
 	// 2 - Store the movement
 	private Vector2 movement;
-	
+
+	void Awake() {
+		colorState = ColorState.Red;
+		shipSpriteRenderer = this.GetComponent<SpriteRenderer> ();
+		if (shipSpriteRenderer != null) {
+			shipSprite = shipSpriteRenderer.sprite;
+		}
+	}
+
 	void Update()
 	{
 		// 3 - Retrieve axis information
@@ -19,10 +37,27 @@ public class Ship : MonoBehaviour {
 		
 		// 4 - Movement per direction
 		movement = new Vector2(
-			speed.x * inputX,
-			speed.y * inputY);
+			MovementSpeed.x * inputX,
+			MovementSpeed.y * inputY);
 
 		transform.position += new Vector3 (movement.x, movement.y, 0);
+
+		if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightControl)) {
+			if (colorState == ColorState.Red) {
+				colorState = ColorState.Blue;
+				ChangeShip(Color.blue);
+			}
+			else {
+				colorState = ColorState.Red;
+				ChangeShip (Color.red);
+			}
+		}
 	}
+
+	void ChangeShip(Color color) {
+		shipSpriteRenderer.color = color;
+	}
+
+
 
 }

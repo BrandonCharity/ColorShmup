@@ -22,7 +22,7 @@ public class Ship : MonoBehaviour {
 			speed.x * inputX,
 			speed.y * inputY);
 
-		transform.position += new Vector3 (movement.x, movement.y, transform.position.z);
+		transform.position += new Vector3 (movement.x, movement.y, 0);
 	}
 
 }

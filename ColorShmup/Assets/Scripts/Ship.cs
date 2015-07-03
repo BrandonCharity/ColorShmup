@@ -11,6 +11,9 @@ public class Ship : MonoBehaviour {
 	/// 1 - The speed of the ship
 	/// </summary>
 	public Vector2 MovementSpeed;
+	public GameObject projectileOne;
+	public GameObject projectileTwo;
+	public float bulletSpawnSpeed;
 
 	[HideInInspector]
 	public ColorState colorState;
@@ -27,6 +30,10 @@ public class Ship : MonoBehaviour {
 		if (shipSpriteRenderer != null) {
 			shipSprite = shipSpriteRenderer.sprite;
 		}
+	}
+
+	void Start () {
+		InvokeRepeating ("ShootProjectile", bulletSpawnSpeed, 1);
 	}
 
 	void Update()
@@ -56,6 +63,14 @@ public class Ship : MonoBehaviour {
 
 	void ChangeShip(Color color) {
 		shipSpriteRenderer.color = color;
+	}
+
+	void ShootProjectile() {
+		if (colorState == ColorState.Red) {
+			Instantiate (projectileOne, this.transform.position, Quaternion.identity);
+		} else {
+			Instantiate (projectileTwo, this.transform.position, Quaternion.identity);
+		}
 	}
 
 
